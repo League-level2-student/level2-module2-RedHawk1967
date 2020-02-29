@@ -6,36 +6,46 @@
 class Segment {
 
 //Add x and y member variables. They will hold the corner location of each segment of the snake.
+int x;
+int y;
 
-
+Segment(int x,int y) {
+this.x = x;
+this.y = y;
+}
 // Add a constructor with parameters to initialize each variable.
-
 
 
 }
 
-
+void LeagueSnake() { }
 //*
 // ***** GAME VARIABLES *****
 // All the game variables that will be shared by the game methods are here
 //*
-
-
-
-
-
+int direction = UP;
+int foodCount = 0;
+Segment shead;
+int foodX;
+int foodY;
 //*
 // ***** SETUP METHODS *****
 // These methods are called at the start of the game.
 //*
 
 void setup() {
+background(0,0,0);
+  size(500,500);
+shead = new Segment(10,10);
+frameRate(20);
+dropFood();
 
 }
 
 void dropFood() {
   //Set the food in a new random location
-    
+    foodX = ((int)random(50)*10);
+    foodY = ((int)random(50)*10);
 }
 
 
@@ -46,16 +56,25 @@ void dropFood() {
 //*
 
 void draw() {
-  
+  move();
+  drawFood();
+  drawSnake();
+  eat();
 }
 
 void drawFood() {
   //Draw the food
+  fill(255,0,0);
+  rect(foodX,foodY,10,10);
   
 }
 
 void drawSnake() {
   //Draw the head of the snake followed by its tail
+  fill(0,255,0);
+  rect(shead.x,shead.y ,10,10);
+  
+
 }
 
 
@@ -89,38 +108,60 @@ void checkTailCollision() {
 
 void keyPressed() {
   //Set the direction of the snake according to the arrow keys pressed
-  
+  if(keyCode == UP) 
+
+{ direction = UP;}
+   
+  else if(keyCode == DOWN) 
+
+{ direction = DOWN; }
+
+  else if(keyCode == RIGHT)
+
+{ direction = RIGHT;}
+
+  else if(keyCode == LEFT) {direction = LEFT;}
+
+
 }
 
 void move() {
   //Change the location of the Snake head based on the direction it is moving.
   
-    /*
+    
   switch(direction) {
   case UP:
-    // move head up here 
+    shead.y-=10;
+    checkBoundaries();  
     break;
   case DOWN:
-    // move head down here 
+   shead.y+=10;
+   checkBoundaries();   
     break;
   case LEFT:
-   // figure it out 
+   shead.x-=10;;
+   checkBoundaries();  
     break;
   case RIGHT:
-    // mystery code goes here 
+    shead.x+=10; 
+    checkBoundaries();  
     break;
-  }
-  */
+    
+}
+  
 }
 
 void checkBoundaries() {
  //If the snake leaves the frame, make it reappear on the other side
- 
+ if(shead.x > 499 || shead.y > 499) {
+ shead.x-=500; shead.y-=500;
+ }
 }
 
 
 
 void eat() {
   //When the snake eats the food, its tail should grow and more food appear
+if(shead.x == foodX && shead.y == foodY) { dropFood(); foodCount++;}
 
 }
