@@ -56,10 +56,12 @@ void dropFood() {
 //*
 
 void draw() {
+  background(0,0,0);
   move();
   drawFood();
   drawSnake();
   eat();
+
 }
 
 void drawFood() {
@@ -73,7 +75,7 @@ void drawSnake() {
   //Draw the head of the snake followed by its tail
   fill(0,255,0);
   rect(shead.x,shead.y ,10,10);
-  
+  manageTail();
 
 }
 
@@ -85,18 +87,34 @@ void drawSnake() {
 
 void drawTail() {
   //Draw each segment of the tail 
+for(int i = 0; i < tail.size(); i++) {
+rect(tail.get(i).x,tail.get(i).y,10,10);
 
 }
+}
+
+ArrayList<Segment> tail = new ArrayList<Segment>();
+
 
 void manageTail() {
   //After drawing the tail, add a new segment at the "start" of the tail and remove the one at the "end" 
   //This produces the illusion of the snake tail moving.
-  
+  checkTailCollision();
+  drawTail();
+  Segment seg = new Segment(shead.x,shead.y);
+  tail.add(seg);
+  tail.remove(0);
 }
 
 void checkTailCollision() {
   //If the snake crosses its own tail, shrink the tail back to one segment
-  
+   
+  if(shead.x = tail.get(1|| shead.y ) {
+  foodCount=1;
+  tail.clear();
+  Segment seg = new Segment(shead.x,shead.y);
+tail.add(seg);
+  }
 }
 
 
@@ -153,15 +171,28 @@ void move() {
 
 void checkBoundaries() {
  //If the snake leaves the frame, make it reappear on the other side
- if(shead.x > 499 || shead.y > 499) {
- shead.x-=500; shead.y-=500;
+ if(shead.x > 500) {
+ shead.x=0; 
  }
+ if(shead.y > 500) {
+   shead.y=0;
+ }
+  if(shead.x < 0) {
+    shead.x=500;
+  }
+  if(shead.y < 0) {
+    shead.y =500;
+  }
+
 }
 
 
 
 void eat() {
   //When the snake eats the food, its tail should grow and more food appear
-if(shead.x == foodX && shead.y == foodY) { dropFood(); foodCount++;}
+if(shead.x == foodX && shead.y == foodY) { dropFood(); foodCount++;
+Segment seg = new Segment(shead.x,shead.y);
+tail.add(seg);
+}
 
 }
